@@ -15,10 +15,29 @@ pnpm-debug.log*
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+
+# Firebase CLI artifacts & logs
+.firebase/
+firebase-debug.log
+
+# Cloud Functions build & runtime config
+functions/node_modules/
+functions/lib/
+functions/.runtimeconfig.json
+
+# Service accounts / local secrets (never commit)
+serviceAccount*.json
+*.secret.*
+*.pem
+
+# Editor
+.vscode/
