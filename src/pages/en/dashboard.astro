@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DashboardApp from "../../islands/DashboardApp";
+import RequireAuth from "../../islands/RequireAuth";
+---
+
+<Layout pageTitle="Dashboard">
+  <RequireAuth url={Astro.url} client:load>
+    <div class ='w-full h-screen flex'>
+      <DashboardApp url={Astro.url} client:load />
+    </div>
+  </RequireAuth>
+</Layout>
