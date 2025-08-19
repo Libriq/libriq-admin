@@ -3,7 +3,7 @@ import { useTranslations } from "../i18n/utils";
 import { getFb } from "../lib/firebase.client";
 import { onAuthStateChanged } from "firebase/auth";
 
-import AnchorButton from "../components/AnchorButton";
+import WhiteButton from "../components/WhiteButton";
 
 type HomeButtonsProps = {
   lang: "en" | "fr";
@@ -24,16 +24,13 @@ const HomeButtons: React.FC<HomeButtonsProps> = ({ lang }) => {
 
   return (
     <div className='w-full mx-4 flex flex-row justify-between'>
-      {!isSignedIn && 
-        <AnchorButton dest={`/${lang}/login/`} title={t('login.signin')} />}
+      {!isSignedIn &&
+        <WhiteButton label={t('login.signin')} onClick={() => { window.location.href = `/${lang}/login/`}} />}
 
-      {isSignedIn &&
-        <AnchorButton dest={`/${lang}/dashboard/`} title={t('nav.dashboard')} />}
+      {isSignedIn && 
+        <WhiteButton label={t('nav.dashboard')} onClick={() => { window.location.href = `/${lang}/dashboard/` }} />}
 
-      <AnchorButton 
-        dest={`mailto:${import.meta.env.PUBLIC_ADMIN_EMAIL}`} 
-        title={t('home.contact.admin')} 
-      />
+      <WhiteButton label={t('home.contact.admin')} href={`mailto:${import.meta.env.PUBLIC_ADMIN_EMAIL}`} />
     </div>
   )
 }
