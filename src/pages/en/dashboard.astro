@@ -6,7 +6,7 @@ import RequireAuth from "../../islands/RequireAuth";
 
 <Layout pageTitle="Dashboard">
   <RequireAuth url={Astro.url} client:load>
-    <div class ='w-full h-screen flex'>
+    <div class ='w-full bg-white h-screen flex'>
       <DashboardApp url={Astro.url} client:load />
     </div>
   </RequireAuth>

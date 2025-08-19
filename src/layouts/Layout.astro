@@ -15,7 +15,7 @@ const lang = getLangFromUrl(Astro.url);
 		<meta name="generator" content={Astro.generator} />
     <title>{pageTitle} | Libriq</title>
 	</head>
-	<body>
+	<body class="bg-gray-950">
     <NavBar lang={lang} url={Astro.url} client:load />
     <slot />
 	</body>
