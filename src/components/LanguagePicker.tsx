@@ -14,7 +14,7 @@ const LanguagePicker: React.FC<LanguagePickerProps> = ({ url }) => {
 
   return (
     <>
-      <a href={href} lang={nextLang} className='text-neutral-300 text-3xl hover:text-white transition-colors duration-200 ease-in-out mx-3 inline-flex items-center justify-center'>
+      <a href={href} lang={nextLang} className='text-neutral-300 text-3xl font-sans hover:text-white transition-colors duration-200 ease-in-out mx-3 inline-flex items-center justify-center'>
         {nextLang}
       </a>
     </>

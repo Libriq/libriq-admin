@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { useTranslations } from "../i18n/utils";
 import { getFb } from "../lib/firebase.client";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 type LoginFormProps = {
-  url: URL;
+  lang: "en" | "fr";
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ url }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ lang }) => {
   const { auth } = getFb();
   const [error, setError] = useState<string | null>(null); 
-  const lang = getLangFromUrl(url);
   const t = useTranslations(lang);
 
   useEffect(() => {

@@ -7,10 +7,11 @@ export const defaultLang = 'en';
 
 export const ui = {
   en: {
+    'app.name': 'Libriq',
     'nav.home': 'Home',
     'nav.dashboard': 'Dashboard',
     'nav.help': 'Help',
-    'nav.account': 'Account',
+    'nav.account': 'My Account',
     'login.signin': 'Sign in',
     'login.email': 'Email',
     'login.password': 'Password',
@@ -20,7 +21,7 @@ export const ui = {
     'nav.home': 'Acceuil',
     'nav.dashboard': 'Tableau de bord',
     'nav.help': 'Aide',
-    'nav.account': 'Compte',
+    'nav.account': 'Mon compte',
     'login.signin': 'Se connecter',
     'login.email': 'Courriel',
     'login.password': 'Mot de passe',

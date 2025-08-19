@@ -26,8 +26,8 @@ const NavBar: React.FC<NavBarProps> = ({ lang, url }) => {
   }, [auth]);
 
   return (
-    <header className='z-100 fixed top-0 left-0 w-full p-4 bg-gray-950 justify-between flex flex-row max-w-screen items-center'>
-      <h1 className='text-4xl text-white font-bold mx-4'>Libriq</h1>
+    <header className='w-full p-4 justify-between flex flex-row max-w-screen items-center'>
+      <h1 className='text-4xl text-white font-serif font-bold mx-4'>{t('app.name')}</h1>
 
       <nav className='mx-2 flex flex-row items-center'>
         <div>
