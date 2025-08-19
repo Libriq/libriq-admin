@@ -1,4 +1,3 @@
-import { languages } from "../i18n/ui";
 import { getLangFromUrl, getRouteFromUrl } from "../i18n/utils";
 
 type LanguagePickerProps = {
