@@ -15,6 +15,7 @@ export const ui = {
     'login.signin': 'Sign in',
     'login.email': 'Email',
     'login.password': 'Password',
+    'logout.signout': 'Sign out',
     'home.contact.admin': 'Contact your administrator',
   },
   fr: {
@@ -25,6 +26,7 @@ export const ui = {
     'login.signin': 'Se connecter',
     'login.email': 'Courriel',
     'login.password': 'Mot de passe',
+    'logout.signout': 'Se déconnecter',
     'home.contact.admin': 'Contacter votre administration',
   },
 } as const;

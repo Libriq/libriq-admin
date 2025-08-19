@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import RequireAuth from "../../islands/RequireAuth";
+import SignOutButton from "../../islands/SignOutButton";
+import SettingOption from "../../components/SettingOption.astro";
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<Layout pageTitle="Mon Compte">
+  <RequireAuth url={Astro.url} client:load>
+    <div class="w-full h-full flex flex-col mt-10">
+      <div class="max-w-4xl backdrop-blur-[4px] z-40 mx-auto">
+        <div class="w-full flex flex-col mb-10 text-white">
+          <div class="flex w-full flex-row justify-between items-center mt-4 mb-10">
+          <h3 class="text-5xl underline font-serif font-bold">Mon Compte</h3>
+            <SignOutButton lang={lang} client:load />
+          </div>
+
+          {/* Reset Password */}
+          <SettingOption 
+            title="Réinitialiser le mot de passe" 
+            desc="Un courriel vous sera envoyé avec les instructions pour réinitialiser votre mot de passe."
+          >
+            <button
+              type="button"
+              class="border border-white p-2 mx-2"
+            >
+              Placeholder button
+            </button>
+          </SettingOption>
+
+          {/* Next Option */}
+          <SettingOption title="Next Option" desc="This is just a test">
+            <button
+              type="button"
+              class="border border-white p-2 mx-2"
+            >
+              Placeholder button
+            </button>
+          </SettingOption>
+          
+        </div>
+      </div>
+    </div>
+  </RequireAuth>
+</Layout>
