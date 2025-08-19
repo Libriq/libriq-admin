@@ -10,13 +10,16 @@ const lang = getLangFromUrl(Astro.url);
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/libriq.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
     <title>{pageTitle} | Libriq</title>
-	</head>
-	<body class="bg-gray-950">
+  </head>
+  <body class="bg-gray-950">
     <NavBar lang={lang} url={Astro.url} client:load />
     <slot />
-	</body>
+  </body>
 </html>
