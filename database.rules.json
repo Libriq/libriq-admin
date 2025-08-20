@@ -1,7 +1,25 @@
 {
-  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": false,
+
+    "announcements": {
+      ".indexOn": ["createdAt"],
+      "$id": {
+        ".read": true,
+        ".write": "auth != null && ( (!data.exists() && newData.exists() && root.child('acl/' + auth.uid + '/perms/announcements/create').val() == true) || (data.exists() && newData.exists() && root.child('acl/' + auth.uid + '/perms/announcements/edit').val() == true) || (data.exists() && !newData.exists() && root.child('acl/' + auth.uid + '/perms/announcements/delete').val() == true) )",
+
+        ".validate": "newData.hasChildren(['title','shortDesc','longDesc','emergency','createdAt','createdBy']) && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 120 && newData.child('shortDesc').isString() && newData.child('shortDesc').val().length > 0 && newData.child('shortDesc').val().length <= 300 && newData.child('longDesc').isString() && newData.child('longDesc').val().length > 0 && newData.child('emergency').isBoolean() && newData.child('createdBy').isString()"
+      }
+    },
+
+    "acl": {
+      "$uid": {
+        // Let users read their own permissions (optional; handy for UI)
+        ".read": "auth != null && auth.uid == $uid",
+        // Only a superadmin (or server) can write ACL
+        ".write": "auth != null && root.child('acl/' + auth.uid + '/role').val() == 'superadmin'"
+      }
+    }
   }
 }
