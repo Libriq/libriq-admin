@@ -1,0 +1,23 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import RequireAuth from "../../../islands/RequireAuth";
+import NewAnnouncementForm from "../../../islands/NewAnnouncementForm";
+import { getLangFromUrl } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<Layout pageTitle="Nouvelle Annonce">
+  <RequireAuth url={Astro.url} client:load>
+    <div class="w-full h-full justify-center flex flex-col items-center">
+      <div class="w-fit mb-10 mt-4 mx-auto flex flex-col">
+        <h2 class="text-white text-5xl font-serif font-bold">Nouvelle Annonce</h2>
+        <hr class="bg-white w-full h-1" />
+      </div>
+      <div class="max-w-4xl px-8 w-full border border-white rounded-3xl">
+        <NewAnnouncementForm lang={lang} client:load />
+      </div>
+    </div>
+  </RequireAuth>
+</Layout>
+

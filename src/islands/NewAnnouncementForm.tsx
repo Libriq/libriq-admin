@@ -1,19 +1,24 @@
+import { useLoading, ThreeDots } from "@agney/react-loading";
 import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 import { createAnnouncement, type Announcement } from "../db/announcements";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useDB } from "../hooks/useDb";
+import { useTranslations } from "../i18n/utils";
 
 type NewAnnouncementFormProps = {
   lang: "en" | "fr";
 }
 
-const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
+const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = (props) => {
+  const t = useTranslations(props.lang);
   const { user } = useAuth();
   const db = useDB();
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successId, setSuccessId] = useState<string | null>(null);
+  const [short, setShort] = useState<string>("");
+  const MAX_SHORT_DESC_LENGTH = 150;
 
   const submitAnnouncement = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +35,7 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
 
     if (!user?.email) {
       setSubmitting(false);
-      setError("You must be signed in to post an announcement.");
+      setError(t('announcement.posting.error'));
       return;
     }
 
@@ -43,44 +48,56 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
     };
 
     try {
+      // TODO: Add form validation before posting
       const id = await createAnnouncement(db, newAnnouncement);
       setSuccessId(id);
       f.reset();
     } catch (err: any) {
       console.error(err);
-      setError(err?.message ?? "Failed to created announcement.");
+      setError(err?.message ?? t('announcement.create.error'));
     } finally {
       setSubmitting(false);
     }
   };
+
+  const { containerProps, indicatorEl } = useLoading({
+    loading: true,
+    indicator: <ThreeDots width="50" color="white" />
+  });
 
   return (
     <form onSubmit={submitAnnouncement}>
       <div className='my-10 grid grid-cols-1 gap-x-6 gap-y-8'>
         {/* Title */}
         <div>
-          <label htmlFor='title' className='block text-2xl mb-2 font-medium font-sans text-white'>Title</label>
+          <label htmlFor='title' className='block text-2xl mb-2 font-medium font-sans text-white'>{t('announcement.title.label')}</label>
           <input 
             name='title' 
-            placeholder='e.g.: Closure on East Campus' 
+            placeholder={t('announcement.title.placeholder')} 
             required
             aria-required
-            title="The notification's title"
             className='w-full text-white py-2 mb-4 bg-transparent border-b border-white/20 focus:outline-none focus:border-white'
           />
         </div>
 
         {/* Short Description */}
         <div className='col-span-full'>
-          <label htmlFor='shortDesc' className='block text-2xl mb-2 font-medium font-sans text-white'>Short Description</label>
+          <label htmlFor='shortDesc' className='block text-2xl mb-2 font-medium font-sans text-white'>
+            {t('announcement.short-desc.label')}
+            <span className='ml-3 text-base font-sans font-light text-white/50'>
+              {short.length} / {MAX_SHORT_DESC_LENGTH}
+            </span>
+          </label>
           <div className="mt-2">
             <textarea 
               id='shortDesc' 
               name='shortDesc' 
-              placeholder='e.g.: Closure of East Campus Library until the end of the day due to an A.C. issue.' 
+              placeholder={t('announcement.short-desc.placeholder')}
               required
               aria-required
               rows={2} 
+              onChange={(e) => setShort(e.target.value)}
+              maxLength={MAX_SHORT_DESC_LENGTH}
               className='block w-full py-2 mb-4 border-b text-white border-white/20 focus:outline-none focus:border-white placeholder-neutral-500'
             >
             </textarea>
@@ -89,12 +106,12 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
 
         {/* Long Description */}
         <div className='col-span-full'>
-          <label htmlFor='longDesc' className='block text-2xl mb-2 font-medium font-sans text-white'>Long Description</label>
+          <label htmlFor='longDesc' className='block text-2xl mb-2 font-medium font-sans text-white'>{t('announcement.long-desc.label')}</label>
           <div className="mt-2">
             <textarea
               id='longDesc'
               name='longDesc'
-              placeholder='Write your long form message here'
+              placeholder={t('announcement.long-desc.placeholder')}
               required
               aria-required
               rows={5}
@@ -106,7 +123,7 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
         {/* Urgency */}
         <div>
           <fieldset>
-            <legend className="text-2xl font-semibold text-white">Urgency</legend>
+            <legend className="text-2xl font-semibold text-white">{t('announcement.urgency.legend')}</legend>
             <div>
               <div className="flex gap-3">
                 <div className="flex h-6 shrink-0 items-center">
@@ -125,8 +142,11 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
                   </div>
                 </div>
                 <div className="text-base">
-                  <label htmlFor='emergency' className='font-medium text-white flex flex-row items-center'><ExclamationTriangleIcon className='w-5 h-5' />&nbsp;Emergency</label>
-                  <p className="text-white/50" id='emergency-description'>Check this if the annoucement is an emergency.</p>
+                  <label htmlFor='emergency' className='font-medium text-white flex flex-row items-center'>
+                    <ExclamationTriangleIcon className='w-5 h-5' />
+                    &nbsp;{t('announcement.emergency.label')}
+                  </label>
+                  <p className="text-white/50" id='emergency-description'>{t('announcement.emergency.description')}</p>
                 </div>
               </div>
             </div>
@@ -137,18 +157,20 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = () => {
             className="mx-auto w-fit mt-2 bg-transparent border border-white text-white font-semibold rounded-md py-2 px-8 hover:text-gray-800 hover:bg-white text-center flex items-center justify-center cursor-pointer" 
             type="submit"
           >
-            Send announcement
+            {t('announcement.submit-btn.label')}
           </button>
         }
         {submitting &&
-          <p className="mx-auto w-fit mt-2 font-semibold font-sans py-2 px-8 text-white/60">
-            Sending...
-          </p>
+          <div className='w-full h-fit flex justify-center'>
+            <section {...containerProps}>
+              {indicatorEl}
+            </section>
+          </div>
         }
 
         {/* Messages */}
         {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
-        {successId && <p className="text-green-400 text-sm mt-2">Announcement created (id: {successId}).</p>}
+        {successId && <p className="text-green-400 text-sm mt-2">{t('announcement.created')} (id: {successId}).</p>}
       </div>
     </form>
   );
