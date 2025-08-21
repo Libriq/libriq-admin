@@ -43,7 +43,7 @@ export async function getAnnouncement(db: Database, id: string) {
   return getOnce<Announcement>(db, path(base(), id));
 }
 
-export async function getAllAnnouncement(db: Database): Promise<Announcement[]> {
+export async function getAllAnnouncements(db: Database): Promise<Announcement[]> {
   const q = byChild(db, base(), "createdAt", { dir: "asc" });
   return getList<Announcement>(q, mapAnnouncement);
 }
