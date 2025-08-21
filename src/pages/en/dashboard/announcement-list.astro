@@ -2,6 +2,9 @@
 import Layout from "../../../layouts/Layout.astro";
 import RequireAuth from "../../../islands/RequireAuth";
 import PreviousAnnouncementList from "../../../islands/PreviousAnnouncementList";
+import { getLangFromUrl } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout pageTitle="Previous Announcements">
@@ -12,7 +15,7 @@ import PreviousAnnouncementList from "../../../islands/PreviousAnnouncementList"
         <hr class="bg-white w-full h-1" />
       </div>
       <div>
-        <PreviousAnnouncementList client:load />
+        <PreviousAnnouncementList lang={lang} client:load />
       </div>
     </div>
   </RequireAuth>

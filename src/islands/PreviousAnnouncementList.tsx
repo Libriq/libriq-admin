@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useLoading, BallTriangle } from "@agney/react-loading";
 import { useDB } from "../hooks/useDb";
 import { getAllAnnouncements, type Announcement } from "../db/announcements";
+import { useTranslations } from "../i18n/utils";
+
 import AnimatedList from "../components/AnimatedList";
 import Collapsible from "../components/Collapsible";
 
@@ -11,22 +13,30 @@ const monthFmt = new Intl.DateTimeFormat(undefined, { month: "long", year: "nume
 function millis(v: unknown): number {
   return typeof v === "number" && isFinite(v) && v > 0 ? v : 0;
 }
+
 function monthKey(ms: number): string {
   if (!ms) return "pending";
   const d = new Date(ms);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`; // e.g., "2025-08"
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
+
 function monthLabel(key: string): string {
   if (key === "pending") return "Pending";
   const [y, m] = key.split("-").map(Number);
   return monthFmt.format(new Date(y, m - 1, 1));
 }
+
 function formatDate(ms: unknown) {
   const n = millis(ms);
   return n ? dayFmt.format(new Date(n)) : "pending…";
 }
 
-const PreviousAnnouncementList: React.FC = () => {
+interface PreviousAnnoucementListProps {
+  lang: 'en' | 'fr';
+}
+
+const PreviousAnnouncementList: React.FC<PreviousAnnoucementListProps> = (props) => {
+  const t = useTranslations(props.lang);
   const db = useDB();
   const [rows, setRows] = useState<Announcement[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +66,7 @@ const PreviousAnnouncementList: React.FC = () => {
       </section>
     </div>
   );
-  if (rows.length === 0) return <p className="text-white/60 text-4xl mx-auto min-h-[60dvh]">No announcements yet.</p>;
+  if (rows.length === 0) return <p className="text-white/60 text-4xl mx-auto min-h-[60dvh]">{t('announcement-list.empty')}</p>;
 
   const sorted = [...rows].sort((a, b) => millis(b.createdAt) - millis(a.createdAt));
 
@@ -77,7 +87,7 @@ const PreviousAnnouncementList: React.FC = () => {
     <div className='flex flex-col'>
       {orderedKeys.flatMap((key) => {
         return (
-          <Collapsible title={monthLabel(key)} id={key}>
+          <Collapsible title={monthLabel(key)} key={key} id={key}>
             <AnimatedList
               items={groups.get(key)!.map((a) => {
                 return (
@@ -90,8 +100,8 @@ const PreviousAnnouncementList: React.FC = () => {
                     </div>
                     <div className="pb-2 mt-4">
                       <div className="flex flex-row justify-between">
-                        <p className="text-sm font-light font-sans text-white">Created: {formatDate(a.createdAt)}</p>
-                        <p className="text-sm font-light font-sans text-white">Created by: {a.createdBy || "unknown"}</p>
+                        <p className="text-sm font-light font-sans text-white">{t('announcement-list.created')} {formatDate(a.createdAt)}</p>
+                        <p className="text-sm font-light font-sans text-white">{t('announcement-list.created-by')} {a.createdBy || "unknown"}</p>
                       </div>
                     </div>
                   </div>

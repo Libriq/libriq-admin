@@ -40,6 +40,9 @@ export const ui = {
     'announcement.emergency.description': 'Check this if the annoucement is an emergency.',
     'announcement.submit-btn.label': 'Send announcement',
     'announcement.created': 'Announcement created',
+    'announcement-list.empty': 'No announcements yet.',
+    'announcement-list.created': 'Created:',
+    'announcement-list.created-by': 'Created by:',
   },
   fr: {
     'nav.home': 'Acceuil',
@@ -73,6 +76,9 @@ export const ui = {
     "announcement.emergency.label": "Urgence",
     "announcement.emergency.description": "Cochez ceci si l’annonce est une urgence.",
     "announcement.submit-btn.label": "Envoyer l’annonce",
-    "annoncement.created": "Annonce créée"
+    "announcement.created": "Annonce créée",
+    'announcement-list.empty': 'Aucunes annonces trouvé',
+    'announcement-list.created': 'Créé le:',
+    'announcement-list.created-by': 'Créé par:',
   },
 } as const;
