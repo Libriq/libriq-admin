@@ -133,17 +133,17 @@ const NewAnnouncementForm: React.FC<NewAnnouncementFormProps> = (props) => {
                       type="checkbox" 
                       name="emergency" 
                       aria-describedby="emergency-description"
-                      className="col-start-1 row-start-1 appearance-none rounded-sm border border-white/10 bg-white/5 checked:border-cyan-500/20 checked:bg-cyan-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:border-white/5 disabled:bg-white/10 disabled:checked:bg-white/10 forced-colors:appearance-auto"
+                      className="col-start-1 row-start-1 appearance-none rounded-sm border border-white/10 bg-white/5 checked:border-yellow-500 checked:bg-yellow-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:border-white/5 disabled:bg-white/10 disabled:checked:bg-white/10 forced-colors:appearance-auto"
                     />
                     <svg viewBox="0 0 14 14" fill="none" className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-white/25">
-                      <path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="opacity-0 group-has-checked:opacity-100" />
-                      <path d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="opacity-0 group-has-indeterminate:opacity-100" />
+                      <path d="M3 8L6 11L11 3.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 group-has-checked:opacity-100" />
+                      <path d="M3 7H11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 group-has-indeterminate:opacity-100" />
                     </svg>
                   </div>
                 </div>
                 <div className="text-base">
                   <label htmlFor='emergency' className='font-medium text-white flex flex-row items-center'>
-                    <ExclamationTriangleIcon className='w-5 h-5' />
+                    <ExclamationTriangleIcon className='w-5 h-5' color="yellow" />
                     &nbsp;{t('announcement.emergency.label')}
                   </label>
                   <p className="text-white/50" id='emergency-description'>{t('announcement.emergency.description')}</p>

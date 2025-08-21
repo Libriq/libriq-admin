@@ -9,10 +9,6 @@ const Clock = () => {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    console.log(time);
-  }, [time]);
-
   const seconds = time.getSeconds();
   const minutes = time.getMinutes();
   const hours = time.getHours();
